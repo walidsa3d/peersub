@@ -1,4 +1,4 @@
-peersub
+Peersub
 =======
 
 Peerflix with subtitles
