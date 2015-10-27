@@ -10,7 +10,7 @@ from itertools import chain
 
 import requests
 
-import magneturi
+import torrentutils
 
 from bs4 import BeautifulSoup as BS
 from termcolor import colored
@@ -53,14 +53,22 @@ def download(sub_url):
     return srt_files[0]
 
 
+def prettyprint(magnetdata):
+    for k, v in magnetdata.iteritems():
+        if type(v) is list:
+            print "{} : {}".format(k, ', '.join(v))
+        else:
+            print "{} : {}".format(k, v)
+
+
 def main():
     if len(sys.argv) < 2:
         print "No magnet link provided"
         sys.exit(1)
     # parse magnet links
-    magnetdata = magneturi.parse(sys.argv[1])
+    magnetdata = torrentutils.parse_magnet(sys.argv[1])
     releasename = magnetdata['name']
-    magneturi.prettyprint(magnetdata)
+    prettyprint(magnetdata)
     if releasename is not None:
         subtitles = search(releasename)
         for index, link in subtitles.iteritems():

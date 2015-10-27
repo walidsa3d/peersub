@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='peersub',
-    version='1.1.0',
+    version='1.2.0',
     description='use peerflix with subtitles',
     long_description='use peerflix with subtitles',
     author='Walid Saad',
@@ -14,9 +14,13 @@ setup(
     packages=find_packages(exclude=['test', 'tests']),
     entry_points={"console_scripts": ["peersub=peersub.peersub:main"]},
     classifiers=[
-        'License :: Free For Home Use',
-        'Natural Language :: English',
-        'Programming Language :: Python'
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: Unix',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Utilities'
     ]
 
 )

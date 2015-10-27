@@ -1,8 +1,10 @@
 Changelog
 =========
 
-%%version%% (unreleased)
-------------------------
+1.1.0 (2015-10-06)
+------------------
+
+- Fix setup.cfg, update README. [walid]
 
 - Chore: add README,LICENSE,MANIFEST.in. [walid]
 
