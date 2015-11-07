@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup as BS
 from termcolor import colored
 import argparse
 from . import __version__
-
+import videoscene.core as scene
 # site url
 BASE_URL = 'http://subscene.com'
 # language of subtitles
@@ -55,11 +55,12 @@ def download(sub_url):
 
 
 def prettyprint(magnetdata):
-    for k, v in magnetdata.iteritems():
-        if type(v) is list:
-            print "{} : {}".format(k, ', '.join(v))
-        else:
-            print "{} : {}".format(k, v)
+    release = magnetdata['name']
+    parsed = scene.parse(release)
+    title = colored(parsed['title'].title(), 'red')
+    year = colored(parsed['year'], 'green')
+    print 'Title: {}'.format(title)
+    print 'Year: {}'.format(year)
 
 
 def main():
