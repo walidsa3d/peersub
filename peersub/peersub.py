@@ -14,6 +14,8 @@ import torrentutils
 
 from bs4 import BeautifulSoup as BS
 from termcolor import colored
+import argparse
+from . import __version__
 
 # site url
 BASE_URL = 'http://subscene.com'
@@ -62,11 +64,22 @@ def prettyprint(magnetdata):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print "No magnet link provided"
-        sys.exit(1)
+    parser = argparse.ArgumentParser(usage="-h for full usage")
+    parser.add_argument(
+        '-V', '--version', action='version', version=__version__)
+    parser.add_argument('link', help='magnet link')
+    parser.add_argument('--vlc', help='magnet link', action='store_true')
+    parser.add_argument('--mpv', help='magnet link', action='store_true')
+    parser.add_argument('--mplayer', help='magnet link', action='store_true')
+    args = parser.parse_args()
+    if args.mplayer:
+        player = '--mplayer'
+    elif args.mpv:
+        player = '--mpv'
+    else:
+        player = '--vlc'
     # parse magnet links
-    magnetdata = torrentutils.parse_magnet(sys.argv[1])
+    magnetdata = torrentutils.parse_magnet(args.link)
     releasename = magnetdata['name']
     prettyprint(magnetdata)
     if releasename is not None:
@@ -75,14 +88,13 @@ def main():
             index = colored(str(index), 'white')
             name = colored(link['name'], 'cyan')
             lang = colored(LANGUAGE, 'red', 'on_green')
-            quality = colored(link['quality'], 'blue')
-            s = "{:12} {:20} {:20} {:50}".format(index, lang, quality, name)
+            s = "{:12} {:20} {:50}".format(index, lang, name)
             print s
         x = raw_input("Choose Subtitle: \t")
         downlink = subtitles[int(x)]['url']
         name = subtitles[int(x)]['name']
         subname = download(downlink)
-        command = ['peerflix', sys.argv[1], '--vlc',
+        command = ['peerflix', sys.argv[1], player,
                    '--remove', '--connections', '60']
         command.append('--subtitles')
         command.append('/tmp/'+subname)

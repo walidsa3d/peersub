@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='peersub',
-    version='1.2.0',
+    version='1.3.0',
     description='use peerflix with subtitles',
     long_description='use peerflix with subtitles',
     author='Walid Saad',
