@@ -3,7 +3,6 @@
 
 import cStringIO
 import subprocess
-import sys
 import zipfile
 
 from itertools import chain
@@ -94,7 +93,7 @@ def main():
         downlink = subtitles[int(x)]['url']
         name = subtitles[int(x)]['name']
         subname = download(downlink)
-        command = ['peerflix', sys.argv[1], player,
+        command = ['peerflix', args.link, player,
                    '--remove', '--connections', '60']
         command.append('--subtitles')
         command.append('/tmp/'+subname)

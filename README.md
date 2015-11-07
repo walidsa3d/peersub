@@ -1,9 +1,17 @@
 Peersub
 =======
+![downloads](https://img.shields.io/pypi/dm/peersub.svg)
+![license](https://img.shields.io/pypi/l/peersub.svg)
+![version](https://img.shields.io/pypi/v/peersub.svg)
 
 Peerflix with subtitles
 
-#License
+# Install (automatic)
+```
+$ pip install peersub
+```
+
+# License
 ```
 The MIT License (MIT)
 
