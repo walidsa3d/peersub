@@ -13,6 +13,12 @@ setup(
     include_package_data=True,
     packages=find_packages(exclude=['test', 'tests']),
     license='MIT',
+    install_requires=['videoscene',
+                      'torrentutils',
+                      'termcolor',
+                      'argparse',
+                      'beautifulsoup4',
+                      'requests'],
     entry_points={"console_scripts": ["peersub=peersub.peersub:main"]},
     classifiers=[
         'Development Status :: 4 - Beta',

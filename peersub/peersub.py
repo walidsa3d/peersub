@@ -38,6 +38,7 @@ def search(release_name):
         if LANGUAGE in suburl and 'trailer' not in name.lower():
             results.append(
                 {'url': BASE_URL+suburl, 'name': name, 'quality': quality})
+    results = results[:15]
     return dict(enumerate(results))
 
 
