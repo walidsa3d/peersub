@@ -1,6 +1,24 @@
 Changelog
 =========
 
+%%version%% (unreleased)
+------------------------
+
+- Use click instead of argparse. [walid]
+
+- Limit number of subtitles to choose from. [walid]
+
+  to 15
+
+- Parse and display movie title and year. [walid]
+
+- Add badges to readme. [walid]
+
+1.3.0 (2015-11-07)
+------------------
+
+- Choose player, prettier output. [walid]
+
 1.2.0 (2015-10-27)
 ------------------
 

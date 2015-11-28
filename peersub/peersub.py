@@ -98,4 +98,5 @@ def main(link, **kwargs):
         peerflix.append(player)
         peerflix.append('--subtitles')
         peerflix.append('/tmp/'+subname)
+        peerflix.append('--not-on-top')
         subprocess.Popen(peerflix)
