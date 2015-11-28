@@ -10,10 +10,9 @@ from itertools import chain
 import requests
 
 import torrentutils
-
+import click
 from bs4 import BeautifulSoup as BS
 from termcolor import colored
-import argparse
 from . import __version__
 import videoscene.core as scene
 # site url
@@ -64,39 +63,39 @@ def prettyprint(magnetdata):
     print 'Year: {}'.format(year)
 
 
-def main():
-    parser = argparse.ArgumentParser(usage="-h for full usage")
-    parser.add_argument(
-        '-V', '--version', action='version', version=__version__)
-    parser.add_argument('link', help='magnet link')
-    parser.add_argument('--vlc', help='magnet link', action='store_true')
-    parser.add_argument('--mpv', help='magnet link', action='store_true')
-    parser.add_argument('--mplayer', help='magnet link', action='store_true')
-    args = parser.parse_args()
-    if args.mplayer:
+@click.command()
+@click.version_option(version=__version__)
+@click.argument('link')
+@click.option('--vlc', is_flag=True, help='use vlc player')
+@click.option('--mpv', is_flag=True, help='use mpv')
+@click.option('--mplayer', is_flag=True, help='use mplayer')
+def main(link, **kwargs):
+    if kwargs['mplayer']:
         player = '--mplayer'
-    elif args.mpv:
+    elif kwargs['mpv']:
         player = '--mpv'
     else:
         player = '--vlc'
     # parse magnet links
-    magnetdata = torrentutils.parse_magnet(args.link)
+    magnetdata = torrentutils.parse_magnet(link)
     releasename = magnetdata['name']
     prettyprint(magnetdata)
-    if releasename is not None:
+    if releasename:
         subtitles = search(releasename)
-        for index, link in subtitles.iteritems():
+        for index, sublink in subtitles.iteritems():
             index = colored(str(index), 'white')
-            name = colored(link['name'], 'cyan')
+            name = colored(sublink['name'], 'cyan')
             lang = colored(LANGUAGE, 'red', 'on_green')
-            s = "{:12} {:20} {:50}".format(index, lang, name)
-            print s
-        x = raw_input("Choose Subtitle: \t")
-        downlink = subtitles[int(x)]['url']
-        name = subtitles[int(x)]['name']
+            output = "{:12} {:20} {:50}".format(index, lang, name)
+            print output
+        subindex = raw_input("Choose Subtitle: \t")
+        subindex = int(subindex)
+        downlink = subtitles[subindex]['url']
+        name = subtitles[subindex]['name']
         subname = download(downlink)
-        command = ['peerflix', args.link, player,
-                   '--remove', '--connections', '60']
-        command.append('--subtitles')
-        command.append('/tmp/'+subname)
-        subprocess.Popen(command)
+        peerflix = ['peerflix']
+        peerflix.append(link)
+        peerflix.append(player)
+        peerflix.append('--subtitles')
+        peerflix.append('/tmp/'+subname)
+        subprocess.Popen(peerflix)
